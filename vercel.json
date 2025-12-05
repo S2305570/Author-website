@@ -1,4 +1,4 @@
 {
-  "devCommand": "node -e \"console.log('Using built-in dev server; run via CLI directly')\"",
-  "framework": "static"
+  "cleanUrls": true,
+  "devCommand": "node -e \"console.log('Using built-in dev server; run via CLI directly')\""
 }
