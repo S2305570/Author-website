@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - V. L. Nikolai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="admin">
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">V. L. Nikolai</a>
+      <div class="site-nav">
+        <a class="text-link" href="books.html">Back to site</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h1>Author Admin</h1>
+          <p class="meta">Private area to log in, add, edit, or remove books.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel" id="login-panel">
+            <h2>Login</h2>
+            <form id="login-form">
+              <label for="login-email">Email</label>
+              <input id="login-email" name="email" type="email" required autocomplete="username">
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" required autocomplete="current-password">
+              <button class="button" type="submit">Sign in</button>
+            </form>
+            <p class="meta" id="login-status">Enter admin credentials to continue.</p>
+          </div>
+
+          <div class="panel" id="session-panel" hidden>
+            <h2>Session</h2>
+            <p class="meta">You are logged in as the author. Your token is kept in localStorage.</p>
+            <button class="button secondary" type="button" id="logout-btn">Log out</button>
+          </div>
+        </div>
+
+        <div class="panel" id="manage-panel" hidden>
+          <div class="section-heading">
+            <h2>Books</h2>
+            <p class="meta">Edit existing books or remove them. Deletion is immediate.</p>
+          </div>
+          <div id="admin-alert" role="status" class="meta"></div>
+          <div id="book-list" class="book-grid"></div>
+        </div>
+
+        <div class="panel" id="form-panel" hidden>
+          <div class="section-heading">
+            <h2 id="form-title">Add a book</h2>
+            <p class="meta">All fields except subtitle are required.</p>
+          </div>
+          <form id="book-form">
+            <label for="book-title">Title</label>
+            <input id="book-title" name="title" required>
+
+            <label for="book-subtitle">Subtitle (optional)</label>
+            <input id="book-subtitle" name="subtitle">
+
+            <label for="book-year">Year</label>
+            <input id="book-year" name="year" type="number" required min="0" step="1">
+
+            <label for="book-status">Status</label>
+            <input id="book-status" name="status" placeholder="Published, Upcoming, Draft..." required>
+
+            <label for="book-short">Short description</label>
+            <textarea id="book-short" name="shortDescription" required></textarea>
+
+            <label for="book-long">Long description</label>
+            <textarea id="book-long" name="longDescription" required></textarea>
+
+            <label for="book-cover">Cover image URL</label>
+            <input id="book-cover" name="coverImageUrl" required placeholder="/pictures/front.png">
+
+            <label for="book-slug">Slug (optional, defaults to title)</label>
+            <input id="book-slug" name="slug" placeholder="theres-something-wrong-in-finland">
+
+            <div class="hero-actions">
+              <button class="button" type="submit" id="book-submit">Create book</button>
+              <button class="button secondary" type="button" id="book-cancel" hidden>Cancel edit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">V. L. Nikolai</p>
+        <p class="meta">Private admin area.</p>
+      </div>
+      <div class="footer-meta">
+        <p>&copy; <span data-year></span> V. L. Nikolai.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/admin.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
