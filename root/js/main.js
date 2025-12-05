@@ -1,0 +1,190 @@
+﻿(() => {
+  const nav = document.querySelector('.site-nav');
+  const toggle = document.querySelector('.nav-toggle');
+
+  if (nav && toggle) {
+    const closeNav = () => {
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    nav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          closeNav();
+        }
+      });
+    });
+
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        closeNav();
+      }
+    });
+  }
+
+  const page = document.body?.dataset.page;
+  if (page) {
+    document.querySelectorAll('.nav-list a').forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      const name = href.replace('.html', '');
+      if (name === page) {
+        link.classList.add('is-active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-year]').forEach((el) => {
+    el.textContent = new Date().getFullYear().toString();
+  });
+
+  const translations = {
+    en: {
+      'nav.home': 'Home',
+      'nav.about': 'About',
+      'nav.books': 'Books',
+      'nav.contact': 'Contact',
+      'hero.kicker': 'Anthology / Early 2026',
+      'hero.title': "There's Something Wrong in Finland",
+      'hero.lede':
+        'Found-footage and folklore-inspired stories across Finland. The first release is a 25-story anthology framed like recovered documents and testimony.',
+      'hero.cta.primary': 'View the book',
+      'hero.cta.secondary': 'Contact',
+      'hero.meta.one': '25 stories from Finland / Found-footage folklore / Publishing early 2026',
+      'hero.meta.two': 'Tone: evidence-style horror that feels real',
+      'about.heading': 'About the author',
+      'about.subhead':
+        'Working across centuries, from shadowed battlefields to quiet lakeside cabins and present-day apartments that never feel entirely empty. The work follows the faint disturbances between reality and an echo, inside which something old still lingers — uninvited and unfinished.',
+      'about.card1.title': 'Found-footage tone',
+      'about.card1.body':
+        'Fragments, transcripts, field notes and half-lost voices. Stories built not as narratives, but as evidence — the kind you were never meant to read.',
+      'about.card2.title': 'Folklore in the cracks',
+      'about.card2.body':
+        'The stories hinge on uncertainty: everything remains plausible in the real world, even when the old stories feel uncomfortably compatible with the details.',
+      'about.card3.title': 'Framing',
+      'about.card3.body':
+        'The material is treated as evidence: plain, understated, and fully compatible with everyday explanations. The unease comes not from what is shown, but from what remains uncrossed, unfinished or unexplained.',
+      'footer.tagline': 'Stories that feel like evidence from stranger corners of Finland.',
+      'aboutpage.badge': 'Finland',
+      'aboutpage.heading': 'About the author',
+      'aboutpage.p1':
+        'Working across centuries, from shadowed battlefields to quiet lakeside cabins and present-day apartments that never feel entirely empty. The work follows the faint disturbances between reality and an echo, inside which something old still lingers — uninvited and unfinished.',
+      'aboutpage.p2':
+        'The material is treated as evidence: plain, understated, and fully compatible with everyday explanations. The unease comes not from what is shown, but from what remains uncrossed, unfinished or unexplained.',
+      'aboutpage.photo': 'Author photo placeholder',
+      'books.heading': 'Books',
+      'books.intro': 'The first release arrives early 2026. Future titles will be added as they form.',
+      'books.card1.title': "There's Something Wrong in Finland",
+      'books.card1.body':
+        'An anthology of 25 stories across Finland, told like recovered documents and interviews. Found-footage folklore horror meant to feel real.',
+      'books.card1.meta': 'Publishing early 2026',
+      'books.card2.title': 'Next project',
+      'books.card2.body': 'Details to come.',
+      'books.card2.meta': 'To be announced',
+      'contact.heading': 'Contact',
+      'contact.intro': 'Email me for readings, interviews, events, or collaboration ideas.',
+      'contact.note': 'A contact form will be added later when submissions open for events and collaborations.',
+      'contact.instagram': 'Instagram',
+      'contact.youtube': 'YouTube',
+    },
+    fi: {
+      'nav.home': 'Etusivu',
+      'nav.about': 'Kirjailijasta',
+      'nav.books': 'Teokset',
+      'nav.contact': 'Yhteys',
+      'hero.kicker': 'Antologia / Alkuvuosi 2026',
+      'hero.title': "There's Something Wrong in Finland",
+      'hero.lede':
+        'Found footage -henkiset, folkloreen nojaavat tarinat ympäri Suomea. Ensimmäinen julkaisu on 25 tarinan antologia, kehystetty löydettyinä dokumentteina ja todistuksina.',
+      'hero.cta.primary': 'Katso kirja',
+      'hero.cta.secondary': 'Ota yhteyttä',
+      'hero.meta.one': '25 tarinaa Suomesta / Found-footage folklore / Julkaistaan alkuvuonna 2026',
+      'hero.meta.two': 'Sävy: dokumenttimainen kauhu, joka tuntuu todelta',
+      'about.heading': 'Kirjailijasta',
+      'about.subhead':
+        'Liikun vuosisatojen halki: hämäriltä taistelukentiltä hiljaisille rantamökeille ja nykyisiin asuntoihin, jotka eivät koskaan tunnu täysin tyhjiltä. Seuraan häiriöitä todellisuuden ja kaikuina palaavan menneen välillä — jotakin vanhaa jää jäljelle, kutsumatta ja kesken.',
+      'about.card1.title': 'Found-footage -sävy',
+      'about.card1.body':
+        'Sirpaleita, transkriptioita, kenttämuistiinpanoja ja puoliksi kadonneita ääniä. Tarinat rakennetaan todisteiksi, ei kertomuksiksi — sellaisiksi, joita ei ollut tarkoitus lukea.',
+      'about.card2.title': 'Folklore raoissa',
+      'about.card2.body':
+        'Epävarmuus kantaa: kaikki pysyy mahdollisena todellisessa maailmassa, vaikka vanhat tarinat sopisivat hätkähdyttävän hyvin yksityiskohtiin.',
+      'about.card3.title': 'Kehystäminen',
+      'about.card3.body':
+        'Aineistoa kohdellaan todisteena: pelkistettynä, hillittynä ja arjen selitysten kanssa täysin yhteensopivana. Levottomuus syntyy siitä, mikä jää yliviivaamatta, kesken tai selittämättä.',
+      'footer.tagline': 'Tarinoita, jotka tuntuvat todisteilta Suomen oudommista kulmista.',
+      'aboutpage.badge': 'Suomi',
+      'aboutpage.heading': 'Kirjailijasta',
+      'aboutpage.p1':
+        'Liikun vuosisatojen halki: hämäriltä taistelukentiltä hiljaisille rantamökeille ja nykyisiin asuntoihin, jotka eivät koskaan tunnu täysin tyhjiltä. Seuraan häiriöitä todellisuuden ja kaikuina palaavan menneen välillä — jotakin vanhaa jää jäljelle, kutsumatta ja kesken.',
+      'aboutpage.p2':
+        'Aineistoa kohdellaan todisteena: pelkistettynä, hillittynä ja arjen selitysten kanssa täysin yhteensopivana. Levottomuus syntyy siitä, mikä jää yliviivaamatta, kesken tai selittämättä.',
+      'aboutpage.photo': 'Kirjailijan kuva tähän',
+      'books.heading': 'Teokset',
+      'books.intro': 'Ensimmäinen julkaisu tulee alkuvuodesta 2026. Uudet nimet lisätään kun ne muotoutuvat.',
+      'books.card1.title': "There's Something Wrong in Finland",
+      'books.card1.body':
+        '25 tarinaa Suomesta, kerrottuna löydettyinä dokumentteina ja haastatteluina. Found-footage folklore -kauhua, joka tuntuu todelta.',
+      'books.card1.meta': 'Julkaistaan alkuvuonna 2026',
+      'books.card2.title': 'Seuraava projekti',
+      'books.card2.body': 'Lisätiedot myöhemmin.',
+      'books.card2.meta': 'Ilmoitetaan myöhemmin',
+      'contact.heading': 'Yhteys',
+      'contact.intro': 'Laita sähköpostia esiintymisistä, haastatteluista, tapahtumista tai ideoista.',
+      'contact.note': 'Lomake lisätään myöhemmin, kun tapahtumiin ja yhteistyöhön avataan lähetykset.',
+      'contact.instagram': 'Instagram',
+      'contact.youtube': 'YouTube',
+    },
+  };
+
+  const applyLanguage = (lang) => {
+    const targetLang = translations[lang] ? lang : 'en';
+    const dict = translations[targetLang];
+    document.documentElement.setAttribute('lang', targetLang);
+    document.body.dataset.lang = targetLang;
+
+    document.querySelectorAll('.lang-switch a').forEach((link) => {
+      const isActive = link.dataset.lang === targetLang;
+      link.classList.toggle('is-active', isActive);
+      link.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.dataset.i18n;
+      const text = dict[key];
+      if (text) {
+        el.textContent = text;
+      }
+    });
+
+    try {
+      localStorage.setItem('siteLang', targetLang);
+    } catch {
+      // storage might be blocked; ignore
+    }
+  };
+
+  const savedLang = (() => {
+    try {
+      return localStorage.getItem('siteLang');
+    } catch {
+      return null;
+    }
+  })();
+
+  applyLanguage(savedLang || document.documentElement.lang || 'en');
+
+  document.querySelectorAll('.lang-switch a').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const lang = link.dataset.lang;
+      applyLanguage(lang);
+    });
+  });
+})();

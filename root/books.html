@@ -1,54 +1,110 @@
-<!DOCTYPE html>
-<html lang="fi">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Teokset – V. L. Nikolai</title>
+    <title>Books - V. L. Nikolai</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Found-footage and folklore-inspired anthology of 25 Finnish stories publishing early 2026; future projects to be announced.">
+    <link rel="canonical" href="https://vlnikolai.com/books">
+    <meta property="og:type" content="book">
+    <meta property="og:site_name" content="V. L. Nikolai">
+    <meta property="og:title" content="Books - V. L. Nikolai">
+    <meta property="og:description" content="Found-footage and folklore-inspired anthology of 25 Finnish stories publishing early 2026; future projects to be announced.">
+    <meta property="og:url" content="https://vlnikolai.com/books">
+    <meta property="og:image" content="https://vlnikolai.com/pictures/front.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Books - V. L. Nikolai">
+    <meta name="twitter:description" content="Found-footage and folklore-inspired anthology of 25 Finnish stories publishing early 2026; future projects to be announced.">
+    <meta name="twitter:image" content="https://vlnikolai.com/pictures/front.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://vlnikolai.com/#person",
+          "name": "V. L. Nikolai",
+          "description": "Author of found-footage, folklore-inspired Finnish stories; first 25-story anthology arrives early 2026.",
+          "email": "mailto:bedtimestoriesforthebrave@gmail.com",
+          "url": "https://vlnikolai.com/"
+        },
+        {
+          "@type": "Book",
+          "name": "There's Something Wrong in Finland",
+          "author": {
+            "@id": "https://vlnikolai.com/#person"
+          },
+          "image": "https://vlnikolai.com/pictures/front.png",
+          "description": "An anthology of 25 stories across Finland, told like recovered documents and interviews. Found-footage folklore horror meant to feel real.",
+          "url": "https://vlnikolai.com/books",
+          "datePublished": "2026-02-01",
+          "inLanguage": [
+            "en",
+            "fi"
+          ],
+          "bookFormat": "EBook"
+        }
+      ]
+    }
+    </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body data-page="books">
+<a class="skip-link" href="#content">Skip to content</a>
 
-<header>
+<header class="site-header">
     <div class="container header-inner">
-        <div class="logo">
-            <a href="index.html">V. L. Nikolai</a>
-        </div>
-        <nav>
+        <a class="logo" href="index.html">V. L. Nikolai</a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+            <span class="nav-toggle-box" aria-hidden="true">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </span>
+            <span class="nav-toggle-text">Menu</span>
+        </button>
+
+        <nav id="primary-nav" class="site-nav" aria-label="Main navigation">
             <ul class="nav-list">
-                <li><a href="index.html">Etusivu</a></li>
-                <li><a href="about.html">Kirjailijasta</a></li>
-                <li><a href="books.html" class="active">Teokset</a></li>
-                <li><a href="contact.html">Yhteystiedot</a></li>
+                <li><a data-i18n="nav.home" href="index.html">Home</a></li>
+                <li><a data-i18n="nav.about" href="about.html">About</a></li>
+                <li><a data-i18n="nav.books" href="books.html">Books</a></li>
+                <li><a data-i18n="nav.contact" href="contact.html">Contact</a></li>
             </ul>
+            <div class="lang-switch" aria-label="Language">
+                <a href="#" class="is-active" data-lang="en">EN</a>
+                <span class="divider">/</span>
+                <a href="#" data-lang="fi">FI</a>
+            </div>
         </nav>
     </div>
 </header>
 
-<main>
+<main id="content">
     <section class="section">
         <div class="container">
-            <h1>Teokset</h1>
-            <p>Tämä sivu listaa kaikki julkaistut ja tulevat kirjat.</p>
+            <h1 data-i18n="books.heading">Books</h1>
+            <p data-i18n="books.intro">The first release arrives early 2026. Future titles will be added as they form.</p>
 
             <div class="book-grid">
 
                 <article class="book-card">
                     <div class="book-cover">
-                        <div class="img-placeholder-small">Kansikuva</div>
+                        <img src="pictures/front.png" alt="There's Something Wrong in Finland cover">
                     </div>
-                    <h3>There’s Something Wrong in Finland</h3>
-                    <p>Kauhuantologia suomalaisista tarinoista ja oudoista ilmiöistä.</p>
-                    <a href="#" class="text-link">Lue lisää »</a>
+                    <h3 data-i18n="books.card1.title">There's Something Wrong in Finland</h3>
+                    <p data-i18n="books.card1.body">An anthology of 25 stories across Finland, told like recovered documents and interviews. Found-footage folklore horror meant to feel real.</p>
+                    <p class="meta" data-i18n="books.card1.meta">Publishing early 2026</p>
                 </article>
 
-                <!-- Lisää kirjoja tähän myöhemmin -->
                 <article class="book-card">
                     <div class="book-cover">
-                        <div class="img-placeholder-small">Tuleva kirja</div>
+                        <div class="img-placeholder-small">TBD</div>
                     </div>
-                    <h3>Työnimi: Uusi projekti</h3>
-                    <p>Tuleva teos, joka lisätään sivulle myöhemmin.</p>
-                    <a href="#" class="text-link">Tulossa »</a>
+                    <h3 data-i18n="books.card2.title">Next project</h3>
+                    <p data-i18n="books.card2.body">Details to come.</p>
+                    <p class="meta" data-i18n="books.card2.meta">To be announced</p>
                 </article>
 
             </div>
@@ -56,11 +112,20 @@
     </section>
 </main>
 
-<footer>
+<footer class="site-footer">
     <div class="container footer-inner">
-        <p>&copy; 2025 V. L. Nikolai.</p>
+        <div>
+            <p class="footer-brand">V. L. Nikolai</p>
+            <p data-i18n="footer.tagline">Stories that feel like evidence from stranger corners of Finland.</p>
+        </div>
+        <div class="footer-meta">
+            <p><a href="mailto:bedtimestoriesforthebrave@gmail.com">bedtimestoriesforthebrave@gmail.com</a></p>
+            <p><a href="sitemap.xml">Sitemap</a></p>
+            <p>&copy; <span data-year></span> V. L. Nikolai.</p>
+        </div>
     </div>
 </footer>
 
+<script src="js/main.js"></script>
 </body>
 </html>
