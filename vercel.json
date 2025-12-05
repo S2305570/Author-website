@@ -1,4 +1,7 @@
 {
   "cleanUrls": true,
-  "devCommand": "node -e \"console.log('Using built-in dev server; run via CLI directly')\""
+  "devCommand": "node -e \"console.log('Using built-in dev server; run via CLI directly')\"",
+  "routes": [
+    { "src": "/admin(?:/)?$", "dest": "/admin.html" }
+  ]
 }
