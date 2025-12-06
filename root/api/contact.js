@@ -34,25 +34,56 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Invalid email' });
   }
 
-  const usingResend = RESEND_API_KEY && !SMTP_HOST && !SMTP_PASS && !SMTP_USER;
-  const portNumber = Number(SMTP_PORT) || 587;
+  const mailText = [
+    `Name: ${name.trim()}`,
+    `Email: ${email.trim()}`,
+    `Subject: ${subject.trim() || '(none)'}`,
+    '',
+    message.trim(),
+  ].join('\n');
 
-  const transportOptions = usingResend
-    ? {
-        host: 'smtp.resend.com',
-        port: 587,
-        secure: false,
-        auth: { user: 'resend', pass: RESEND_API_KEY },
-      }
-    : {
-        host: SMTP_HOST,
-        port: portNumber,
-        secure: portNumber === 465,
-        auth: {
-          user: SMTP_USER,
-          pass: SMTP_PASS,
+  const inferredDomain = (CONTACT_FROM || CONTACT_TO || '').split('@')[1] || 'example.com';
+  const fromAddress = (CONTACT_FROM || `Author Site <no-reply@${inferredDomain}>`).replace(/^['"]|['"]$/g, '');
+
+  if (RESEND_API_KEY) {
+    try {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
         },
-      };
+        body: JSON.stringify({
+          from: fromAddress,
+          to: [CONTACT_TO || SMTP_USER],
+          reply_to: email.trim(),
+          subject: subject.trim() || 'New contact form submission',
+          text: mailText,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        const msg = errorBody.message || errorBody.error || 'Failed to send message';
+        return res.status(500).json({ error: msg });
+      }
+
+      return res.status(200).json({ ok: true });
+    } catch (err) {
+      return res.status(500).json({ error: 'Failed to send message' });
+    }
+  }
+
+  const portNumber = Number(SMTP_PORT) || 587;
+  const transportOptions = {
+    host: SMTP_HOST,
+    port: portNumber,
+    secure: portNumber === 465,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  };
 
   if (!transportOptions.host || !transportOptions.auth?.user || !transportOptions.auth?.pass) {
     return res.status(500).json({ error: 'Email is not configured' });
@@ -60,22 +91,14 @@ module.exports = async (req, res) => {
 
   const transport = nodemailer.createTransport(transportOptions);
 
-  const mailOptions = {
-    from: CONTACT_FROM || SMTP_USER,
-    to: CONTACT_TO || SMTP_USER,
-    replyTo: email.trim(),
-    subject: subject.trim() || 'New contact form submission',
-    text: [
-      `Name: ${name.trim()}`,
-      `Email: ${email.trim()}`,
-      `Subject: ${subject.trim() || '(none)'}`,
-      '',
-      message.trim(),
-    ].join('\n'),
-  };
-
   try {
-    await transport.sendMail(mailOptions);
+    await transport.sendMail({
+      from: CONTACT_FROM || SMTP_USER,
+      to: CONTACT_TO || SMTP_USER,
+      replyTo: email.trim(),
+      subject: subject.trim() || 'New contact form submission',
+      text: mailText,
+    });
     return res.status(200).json({ ok: true });
   } catch (err) {
     return res.status(500).json({ error: 'Failed to send message' });
