@@ -1,4 +1,4 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -87,27 +87,8 @@
             <h1 data-i18n="books.heading">Books</h1>
             <p data-i18n="books.intro">The first release arrives early 2026. Future titles will be added as they form.</p>
 
-            <div class="book-grid">
-
-                <article class="book-card">
-                    <div class="book-cover">
-                        <img src="pictures/front.png" alt="There's Something Wrong in Finland cover">
-                    </div>
-                    <h3 data-i18n="books.card1.title">There's Something Wrong in Finland</h3>
-                    <p data-i18n="books.card1.body">An anthology of 25 stories across Finland, told like recovered documents and interviews. Found-footage folklore horror meant to feel real.</p>
-                    <p class="meta" data-i18n="books.card1.meta">Publishing early 2026</p>
-                </article>
-
-                <article class="book-card">
-                    <div class="book-cover">
-                        <div class="img-placeholder-small">TBD</div>
-                    </div>
-                    <h3 data-i18n="books.card2.title">Next project</h3>
-                    <p data-i18n="books.card2.body">Details to come.</p>
-                    <p class="meta" data-i18n="books.card2.meta">To be announced</p>
-                </article>
-
-            </div>
+            <div class="book-grid" id="books-grid" aria-live="polite"></div>
+            <p class="meta" data-books-status>Loading books…</p>
         </div>
     </section>
 </main>
@@ -126,6 +107,7 @@
     </div>
 </footer>
 
+<script src="js/books.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
