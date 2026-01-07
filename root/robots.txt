@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /portfolio
 Sitemap: https://vlnikolai.com/sitemap.xml

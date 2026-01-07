@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ville Lähteenmäki – Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root{
+      --ink:#202124;
+      --muted:#5f6368;
+      --brand:#0b63c5;
+      --brand-soft:#e3f2ff;
+      --bg:#f3f4f7;
+      --line:#dde1e7;
+      --card:#ffffff;
+      --accent:#ffd54a;
+      --maxw:1000px;
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      line-height:1.5;
+    }
+
+    h1,h2,h3{margin:.4em 0}
+    p{margin:.6em 0}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .wrap{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:0 16px;
+    }
+
+    /* Header */
+
+    header{
+      background:linear-gradient(120deg,#0b63c5,#0b4a8f);
+      color:#fff;
+      padding:14px 0 10px;
+      box-shadow:0 2px 6px #00000026;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .title{
+      font-size:32px;
+      font-weight:800;
+      margin:4px 0 2px;
+      text-align:center;
+      letter-spacing:0.02em;
+    }
+    nav{
+      padding:4px 0 8px;
+      text-align:center;
+      font-size:15px;
+    }
+    nav a{
+      color:#e6f2ff;
+      text-decoration:none;
+      font-weight:600;
+      margin:0 10px;
+      padding:4px 6px;
+      border-radius:999px;
+      transition:background .15s ease, color .15s ease;
+    }
+    nav a:hover{
+      background:#ffffff22;
+      color:#fff;
+    }
+
+    /* Hero */
+
+    main{padding-bottom:24px}
+
+    .hero{
+      text-align:center;
+      padding:30px 0 8px;
+    }
+    .hero-inner{
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero img{
+      width:140px;
+      height:140px;
+      border-radius:50%;
+      object-fit:cover;
+      box-shadow:0 4px 10px #00000026;
+      border:3px solid #fff;
+      background:#ddd;
+    }
+    .hero-text{
+      max-width:520px;
+      text-align:left;
+    }
+    .hero-text h3{
+      font-size:22px;
+      margin-bottom:6px;
+    }
+    .hero-tagline{
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .hero-meta{
+      font-size:14px;
+      color:var(--muted);
+    }
+    .hero-pill{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background:var(--brand-soft);
+      color:var(--brand);
+      font-size:13px;
+      font-weight:600;
+      margin-top:8px;
+    }
+
+    /* Divider section */
+
+    .divider{
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:var(--card);
+      padding:26px 16px 30px;
+      margin:20px 0;
+      border-radius:14px;
+      box-shadow:0 6px 16px #00000012;
+    }
+
+    .section-title{
+      font-size:22px;
+      text-align:left;
+      margin:0 0 14px;
+    }
+
+    /* Osaamisalueet */
+
+    .badge-list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(260px,1fr));
+      gap:18px 40px;
+      align-items:flex-start;
+    }
+    .badge-column-title{
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--muted);
+      margin-bottom:4px;
+      font-weight:700;
+    }
+    .badge-list ul{
+      margin:0;
+      padding-left:16px;
+      list-style:disc;
+      color:var(--ink);
+      font-size:15px;
+    }
+    .badge-list li{margin:4px 0}
+
+    /* Projektit */
+
+    .projects-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:10px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+    .projects-sub{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .projects-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(260px,1fr));
+      gap:18px;
+    }
+
+    .project-card{
+      position:relative;
+      background:#fafbff;
+      border-radius:12px;
+      padding:14px 14px 16px;
+      border:1px solid #d5e1f5;
+      box-shadow:0 4px 10px #00000008;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .project-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 18px #00000018;
+      border-color:#b7ccf0;
+      background:#f4f7ff;
+    }
+    .project-label{
+      position:absolute;
+      top:8px;
+      left:12px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--muted);
+    }
+    .project-title{
+      margin-top:18px;
+      margin-bottom:6px;
+      font-size:17px;
+      font-weight:700;
+    }
+    .project-card p{
+      font-size:14px;
+      margin:4px 0;
+    }
+    .project-card ul{
+      margin:8px 0 6px;
+      padding-left:18px;
+      font-size:14px;
+    }
+    .project-tech{
+      font-size:13px;
+      color:#285c9c;
+      font-weight:600;
+      margin-top:6px;
+    }
+    .project-link a{
+      font-size:13px;
+      font-weight:600;
+    }
+
+    /* CV */
+
+    .cv{
+      padding:26px 12px 30px;
+      background:transparent;
+    }
+    .cv .card{
+      background:var(--card);
+      border-radius:14px;
+      box-shadow:0 6px 16px #00000014;
+      padding:18px 18px 20px;
+      border:1px solid var(--line);
+    }
+    .cv h3{
+      text-align:left;
+      margin:4px 0 12px;
+      font-size:20px;
+    }
+
+    .cv-footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+      font-size:14px;
+    }
+    .cv-footer-text{
+      color:var(--muted);
+    }
+
+    .btn-ghost{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      border:1px solid #0b63c533;
+      cursor:pointer;
+      text-decoration:none;
+      background:#ffffff;
+      color:#0b63c5;
+      box-shadow:0 2px 6px #00000014;
+      transition:background .15s ease, color .15s ease, box-shadow .15s ease, transform .08s ease;
+    }
+    .btn-ghost:hover{
+      background:#e3f2ff;
+      text-decoration:none;
+      transform:translateY(-1px);
+    }
+    .cv .btn-ghost{
+      width:100%;
+      padding:16px 24px;
+      font-size:16px;
+    }
+
+    /* Yhteystiedot */
+
+    .contact{
+      background:transparent;
+      padding:0 12px 28px;
+    }
+    .contact .wrap-inner{
+      max-width:620px;
+      margin:0 auto;
+    }
+
+    footer{
+      background:#101115;
+      color:#dadce0;
+      text-align:center;
+      padding:18px 10px;
+      margin-top:8px;
+      font-size:13px;
+    }
+
+    @media (max-width:780px){
+      .projects-grid{grid-template-columns:1fr}
+      .hero-inner{align-items:flex-start}
+      .hero-text{text-align:left}
+      .section-title{text-align:left}
+    }
+
+    @media (max-width:520px){
+      .title{font-size:26px}
+      header{padding-top:10px}
+      nav{font-size:14px}
+      nav a{margin:0 6px}
+      .divider{padding:20px 14px 22px}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <h1 class="title">Ville Lähteenmäki</h1>
+      <nav>
+        <a href="#etusivu">Etusivu</a>
+        <a href="#osaaminen">Osaaminen</a>
+        <a href="#projektit">Projektit</a>
+        <a href="#cv">CV</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="etusivu" class="wrap">
+    <section class="hero">
+      <div class="hero-inner">
+        <img src="pictures/oma-kuva.jpg" alt="Ville Lähteenmäki" />
+        <div class="hero-text">
+          <h3>IT tradenomi (opiskelija) | Ohjelmistokehitys | Digitaaliset projektit | Luova tuotanto</h3>
+          <p class="hero-tagline">
+            Kolmannen vuoden IT-tradenomi, jonka vahvin osaaminen on ongelmanratkaisu ja sopeutumiskyky.
+            Riippumatta lähtötilanteesta tai teknisestä ympäristöstä löydän toimivan ratkaisun ja vien sen maaliin.
+            Kokemusta tuotantovalmiiden sovellusten, web-palveluiden ja automaatioiden kehittämisestä ideasta
+            toteutukseen. Erityinen kiinnostus AI-ratkaisuihin, automaatioon ja järjestelmiin, jotka säästävät aikaa,
+            vähentävät virheitä ja helpottavat arkea.
+          </p>
+          <div class="hero-meta">
+            Ulvila · Sähköposti: <a href="mailto:wilzeu@gmail.com">wilzeu@gmail.com</a> ·
+            LinkedIn: <a href="https://www.linkedin.com/in/ville-l%C3%A4hteenm%C3%A4ki-734698302" target="_blank" rel="noopener noreferrer">
+              ville-lähteenmäki-734698302
+            </a>
+          </div>
+          <span class="hero-pill">Python · JavaScript · C# · SQL · Kotlin</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="divider">
+      <h3 class="section-title">Koulutus</h3>
+      <p><strong>Savonia University of Applied Sciences</strong> – IT tradenomi (BBA in Business Information Technology)</p>
+      <p>2023–2026</p>
+      <p><strong>Keskeisiä opintoja:</strong></p>
+      <ul>
+        <li>Ohjelmointi- ja web-ohjelmointikursseja (Python, C#, JavaScript)</li>
+        <li>Tiedonhallinta ja SQL</li>
+        <li>Data-analytiikka ja Power BI</li>
+        <li>Projektinhallinta ja asiantuntijatyö</li>
+        <li>Tietoturvan ja tietosuojan perusteet</li>
+        <li>Työvälineiden edistynyt käyttö (Microsoft-ympäristö)</li>
+        <li>Power Apps ja Power Automate prosessien automatisoinnissa</li>
+        <li>Ohjelmistorobotiikka (UiPath StudioX)</li>
+      </ul>
+    </section>
+
+    <section id="osaaminen" class="divider">
+      <h3 class="section-title">Tekninen osaaminen</h3>
+      <div class="badge-list">
+        <div>
+          <div class="badge-column-title">Ohjelmointikielet</div>
+          <ul>
+            <li>Python</li>
+            <li>JavaScript</li>
+            <li>C# (.NET – perusteet)</li>
+            <li>SQL</li>
+            <li>Kotlin (Android)</li>
+          </ul>
+          <div class="badge-column-title" style="margin-top:14px;">Web & backend</div>
+          <ul>
+            <li>HTML, CSS</li>
+            <li>Node.js, Express</li>
+            <li>REST-API:t, JWT</li>
+            <li>Serverless-arkkitehtuuri (Vercel)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="badge-column-title">Data, AI & automaatio</div>
+          <ul>
+            <li>Data-analytiikan perusteet, Power BI</li>
+            <li>OpenAI LLM API</li>
+            <li>Power Apps, Power Automate</li>
+            <li>UiPath StudioX (RPA)</li>
+          </ul>
+          <div class="badge-column-title" style="margin-top:14px;">Työkalut & käytännöt</div>
+          <ul>
+            <li>Git & GitHub</li>
+            <li>Projektinhallinta ja dokumentointi</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projektit" class="divider">
+      <div class="projects-header">
+        <h3 class="section-title">Projektikokemus</h3>
+        <span class="projects-sub">Valitut projektit</span>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <span class="project-label">StoryCodex</span>
+          <h4 class="project-title">Android-sovellus – AI-satukone lapsille</h4>
+          <p>Android / mobiilikehitysprojekti.</p>
+          <ul>
+            <li>Lapsi luo sadun valitsemalla hahmot, paikan ja juonen painikkeilla.</li>
+            <li>LLM-integraatio tuottaa lapsiystävällisen sadun suomeksi ja lukee sen ääneen TTS:llä.</li>
+            <li>Offline-tuki: välimuistiin tallennetut sadut verkkoyhteyden puuttuessa.</li>
+            <li>Turvallisuuspainotteinen suunnittelu ja kontrolloitu promptaus.</li>
+          </ul>
+          <p class="project-tech">Teknologiat: Kotlin, Jetpack Compose, Android TTS, OpenAI LLM API, Backend-API</p>
+        </article>
+
+        <article class="project-card">
+          <span class="project-label">Author Website</span>
+          <h4 class="project-title">www.vlnikolai.com – kirjailijan verkkosivusto ja hallintapaneeli</h4>
+          <p>Full-stack / serverless-webprojekti.</p>
+          <ul>
+            <li>Staattinen kirjailijasivusto (HTML/CSS/JS), julkaistu Vercelissä ilman build-vaihetta.</li>
+            <li>Serverless-API kirjojen hallintaan ja yhteydenottolomakkeen välittämiseen.</li>
+            <li>Admin-näkymä JWT-pohjaisella kirjautumisella ja kirjojen CRUD-toiminnoilla.</li>
+            <li>Kaksikielinen käyttöliittymä (FI/EN) ja paikallinen Express-kehityspalvelin.</li>
+          </ul>
+          <p class="project-tech">Teknologiat: HTML, CSS, JavaScript, Node.js, Express, JWT, Vercel, JSON</p>
+          <p class="project-link">
+            <a href="https://vlnikolai.com" target="_blank" rel="noopener noreferrer">Katso sivusto →</a>
+          </p>
+        </article>
+
+        <article class="project-card">
+          <span class="project-label">Opinnot</span>
+          <h4 class="project-title">Muut ohjelmistoprojektit</h4>
+          <ul>
+            <li>.NET MAUI -sovellus: henkilöstöhallinnan monialustasovellus, kirjautuminen ja CRUD.</li>
+            <li>UiPath StudioX -automaatioprojekti: Excel-datan käsittely ja verkkohaku.</li>
+            <li>Matkailijamittarin data-analyysi: Power Pivot -visualisoinnit ja raportointi.</li>
+          </ul>
+          <p class="project-tech">Teknologiat: .NET MAUI, C#, XAML, UiPath StudioX, Excel, Power Pivot</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section id="cv" class="cv">
+    <div class="wrap">
+      <div class="divider" style="text-align:center;">
+        <a class="btn-ghost" href="data/cv.pdf" target="_blank" rel="noopener noreferrer">
+          Lataa CV (PDF)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 Ville Lähteenmäki</footer>
+</body>
+</html>
