@@ -1,4 +1,73 @@
-(() => {
+﻿(() => {
+  const body = document.body;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LANGUAGE_TRANSITION_MS = 180;
+  let languageTransitionTimer = null;
+
+  if (body) {
+    if (prefersReducedMotion) {
+      body.classList.add('page-ready');
+    } else {
+      requestAnimationFrame(() => {
+        body.classList.add('page-ready');
+      });
+    }
+  }
+
+  if (!prefersReducedMotion) {
+    window.addEventListener('pageshow', () => {
+      body?.classList.add('page-ready');
+      body?.classList.remove('page-leaving');
+    });
+
+    document.querySelectorAll('a[href]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || link.hasAttribute('download')) {
+          return;
+        }
+
+        if ((link.getAttribute('target') || '').toLowerCase() === '_blank') {
+          return;
+        }
+
+        const url = new URL(href, window.location.href);
+        const isSamePageHash =
+          url.origin === window.location.origin &&
+          url.pathname === window.location.pathname &&
+          url.search === window.location.search &&
+          url.hash;
+
+        if (
+          url.origin !== window.location.origin ||
+          href.startsWith('mailto:') ||
+          href.startsWith('tel:') ||
+          isSamePageHash
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        body?.classList.remove('page-ready');
+        body?.classList.add('page-leaving');
+        window.setTimeout(() => {
+          window.location.href = url.href;
+        }, 260);
+      });
+    });
+  }
+
   const nav = document.querySelector('.site-nav');
   const toggle = document.querySelector('.nav-toggle');
 
@@ -53,30 +122,32 @@
       'hero.kicker': 'Anthology / Early 2026',
       'hero.title': "There's Something Wrong in Finland",
       'hero.lede':
-        'Found-footage and folklore-inspired stories across Finland. The first release is a 25-story anthology framed like recovered documents and testimony.',
+        'A horror anthology built from found documents and testimonies. 25 stories from across Finland, where folklore, buried cases, and something older still move just beneath the surface.',
       'hero.cta.primary': 'View the book',
       'hero.cta.secondary': 'Contact',
-      'hero.meta.one': '25 stories from Finland / Found-footage folklore / Publishing early 2026',
-      'hero.meta.two': 'Tone: evidence-style horror that feels real',
+      'hero.meta.one': 'Publishing early 2026',
+      'hero.meta.two': 'Tone: documentary horror',
       'about.heading': 'About the author',
       'about.subhead':
-        'Working across centuries, from shadowed battlefields to quiet lakeside cabins and present-day apartments that never feel entirely empty. The work follows the faint disturbances between reality and an echo, inside which something old still lingers - uninvited and unfinished.',
-      'about.card1.title': 'Found-footage tone',
+        'I write horror built from documents, notes, diaries, interrogations, and other traces left behind. In my work, the supernatural does not appear as a grand spectacle, but as a fracture in everyday life.',
+      'about.card1.title': 'Documentary Horror',
       'about.card1.body':
-        'Fragments, transcripts, field notes and half-lost voices. Stories built not as narratives, but as evidence - the kind you were never meant to read.',
-      'about.card2.title': 'Folklore in the cracks',
+        'My stories are built on found material: diaries, reports, transcripts, notebooks, and other traces that were never originally meant to be read.',
+      'about.card2.title': 'Finnish Folklore',
       'about.card2.body':
-        'The stories hinge on uncertainty: everything remains plausible in the real world, even when the old stories feel uncomfortably compatible with the details.',
-      'about.card3.title': 'Framing',
+        'Folk belief and old beings remain present without being overexplained. They appear in customs, places, fears, and in the ways people try to understand something older than themselves.',
+      'about.card3.title': 'A World Built from Archives',
       'about.card3.body':
-        'The material is treated as evidence: plain, understated, and fully compatible with everyday explanations. The unease comes not from what is shown, but from what remains uncrossed, unfinished or unexplained.',
-      'footer.tagline': 'Stories that feel like evidence from stranger corners of Finland.',
+        'Individual stories gradually form a larger whole. Not everything is visible at once, but the same patterns, places, and shadows begin to return.',
+      'footer.tagline': "Curator of Finland's darker stories",
       'aboutpage.badge': 'Finland',
       'aboutpage.heading': 'About the author',
       'aboutpage.p1':
-        'Working across centuries, from shadowed battlefields to quiet lakeside cabins and present-day apartments that never feel entirely empty. The work follows the faint disturbances between reality and an echo, inside which something old still lingers - uninvited and unfinished.',
+        'I write horror built from documents, notes, diaries, interrogations, and other traces left behind. In my work, the supernatural does not appear as a grand spectacle, but as a fracture in everyday life: a detail that does not fit any explanation, or an observation that continues to haunt.',
       'aboutpage.p2':
-        'The material is treated as evidence: plain, understated, and fully compatible with everyday explanations. The unease comes not from what is shown, but from what remains uncrossed, unfinished or unexplained.',
+        'My work moves through Finnish landscapes and folklore, but does not treat them as decoration. Forests, shorelines, remote places, sites marked by war, apartment blocks, and ordinary homes all carry something older within them, something that has never fully disappeared.',
+      'aboutpage.p3':
+        'I build stories on evidence rather than confession. The reader is not given a complete answer, but the material itself: something found, preserved, or left unsaid, whose meaning begins to emerge only gradually.',
       'aboutpage.photo': 'Author photo placeholder',
       'books.heading': 'Books',
       'books.intro': 'The first release arrives early 2026. Future titles will be added as they form.',
@@ -90,17 +161,8 @@
       'contact.heading': 'Contact',
       'contact.intro': 'Send me a message!',
       'contact.note': 'Send a message with the form below and I will reply by email.',
-      'contact.instagram': 'Instagram @V.L.Nikolai',
+      'contact.instagram': 'Instagram',
       'contact.youtube': 'YouTube',
-      'contact.form.name': 'Name',
-      'contact.form.email': 'Email',
-      'contact.form.subject': 'Subject (optional)',
-      'contact.form.message': 'Message',
-      'contact.form.submit': 'Send message',
-      'contact.form.sending': 'Sending...',
-      'contact.form.success': 'Thanks! Your message was sent.',
-      'contact.form.error': 'Could not send the message right now.',
-      'contact.form.required': 'Name, email, and message are required.',
     },
     fi: {
       'nav.home': 'Etusivu',
@@ -110,30 +172,32 @@
       'hero.kicker': 'Antologia / Alkuvuosi 2026',
       'hero.title': "There's Something Wrong in Finland",
       'hero.lede':
-        'Found footage -henkiset, folkloreen nojaavat tarinat ympäri Suomea. Ensimmäinen julkaisu on 25 tarinan antologia, kehystetty löydettyinä dokumentteina ja todistuksina.',
+        'Löydettyjen dokumenttien ja todistusten varaan rakentuva kauhuantologia. 25 tarinaa eri puolilta Suomea, siellä missä kansanperinne, vaietut tapaukset ja jokin vanhempi kulkevat yhä pinnan alla.',
       'hero.cta.primary': 'Katso kirja',
       'hero.cta.secondary': 'Ota yhteyttä',
-      'hero.meta.one': '25 tarinaa Suomesta / Found-footage folklore / Julkaistaan alkuvuonna 2026',
-      'hero.meta.two': 'Sävy: dokumenttimainen kauhu, joka tuntuu todelta',
+      'hero.meta.one': 'Julkaistaan alkuvuonna 2026',
+      'hero.meta.two': 'Sävy: dokumenttimainen kauhu',
       'about.heading': 'Kirjailijasta',
       'about.subhead':
-        'Liikun vuosisatojen halki: hämäriltä taistelukentiltä hiljaisille rantamökeille ja nykyisiin asuntoihin, jotka eivät koskaan tunnu täysin tyhjiltä. Seuraan häiriöitä todellisuuden ja kaikuina palaavan menneen välillä - jotakin vanhaa jää jäljelle, kutsumatta ja kesken.',
-      'about.card1.title': 'Found-footage -sävy',
+        'Kirjoitan kauhua, joka rakentuu asiakirjoista, muistiinpanoista, päiväkirjoista, kuulusteluista ja muista löydetyistä jäljistä. Tarinoissani yliluonnollinen ei näyttäydy suurena eleenä, vaan särönä arjessa.',
+      'about.card1.title': 'Dokumentaarinen kauhu',
       'about.card1.body':
-        'Sirpaleita, transkriptioita, kenttämuistiinpanoja ja puoliksi kadonneita ääniä. Tarinat rakennetaan todisteiksi, ei kertomuksiksi - sellaisiksi, joita ei ollut tarkoitus lukea.',
-      'about.card2.title': 'Folklore raoissa',
+        'Tarinoideni pohja on löydetyssä aineistossa: päiväkirjoissa, raporteissa, litteroinneissa, muistikirjoissa ja muissa jäljissä, joita ei alun perin ollut tarkoitettu luettaviksi.',
+      'about.card2.title': 'Suomalainen kansanperinne',
       'about.card2.body':
-        'Epävarmuus kantaa: kaikki pysyy mahdollisena todellisessa maailmassa, vaikka vanhat tarinat sopisivat hätkähdyttävän hyvin yksityiskohtiin.',
-      'about.card3.title': 'Kehystäminen',
+        'Kansanusko ja vanhat olennot kulkevat mukana ilman että niitä selitetään puhki. Ne näkyvät tavoissa, paikoissa, peloissa ja siinä, miten ihmiset yrittävät ymmärtää jotakin itseään vanhempaa.',
+      'about.card3.title': 'Arkistosta rakentuva maailma',
       'about.card3.body':
-        'Aineistoa kohdellaan todisteena: pelkistettynä, hillittynä ja arjen selitysten kanssa täysin yhteensopivana. Levottomuus syntyy siitä, mikä jää yliviivaamatta, kesken tai selittämättä.',
-      'footer.tagline': 'Tarinoita, jotka tuntuvat todisteilta Suomen oudommista kulmista.',
+        'Yksittäiset kertomukset muodostavat vähitellen laajemman kokonaisuuden. Kaikki ei ole heti näkyvissä, mutta samat kaavat, paikat ja varjot alkavat toistua.',
+      'footer.tagline': 'Suomen synkempien tarinoiden arkistoija',
       'aboutpage.badge': 'Suomi',
       'aboutpage.heading': 'Kirjailijasta',
       'aboutpage.p1':
-        'Liikun vuosisatojen halki: hämäriltä taistelukentiltä hiljaisille rantamökeille ja nykyisiin asuntoihin, jotka eivät koskaan tunnu täysin tyhjiltä. Seuraan häiriöitä todellisuuden ja kaikuina palaavan menneen välillä - jotakin vanhaa jää jäljelle, kutsumatta ja kesken.',
+        'Kirjoitan kauhua, joka rakentuu asiakirjoista, muistiinpanoista, päiväkirjoista, kuulusteluista ja muista löydetyistä jäljistä. Tarinoissani yliluonnollinen ei näyttäydy suurena eleenä, vaan särönä arjessa: yksityiskohtana, joka ei sovi selityksiin, ja havaintona, joka jää vaivaamaan.',
       'aboutpage.p2':
-        'Aineistoa kohdellaan todisteena: pelkistettynä, hillittynä ja arjen selitysten kanssa täysin yhteensopivana. Levottomuus syntyy siitä, mikä jää yliviivaamatta, kesken tai selittämättä.',
+        'Työni liikkuu suomalaisessa maisemassa ja kansanperinteessä, mutta ei käsittele niitä koristeina. Metsät, rannat, syrjäseudut, sodan jättämät paikat, kerrostalot ja tavalliset kodit kantavat mukanaan jotakin vanhempaa, joka ei ole koskaan kadonnut kokonaan.',
+      'aboutpage.p3':
+        'Rakennan kertomuksia mieluummin todisteiden kuin tunnustusten varaan. Lukija ei saa valmista vastausta, vaan aineiston: jotain löydettyä, talteen jäänyttä tai vaiettua, jonka merkitys alkaa hahmottua vasta vähitellen.',
       'aboutpage.photo': 'Kirjailijan kuva tähän',
       'books.heading': 'Teokset',
       'books.intro': 'Ensimmäinen julkaisu tulee alkuvuodesta 2026. Uudet nimet lisätään kun ne muotoutuvat.',
@@ -145,24 +209,12 @@
       'books.card2.body': 'Lisätiedot myöhemmin.',
       'books.card2.meta': 'Ilmoitetaan myöhemmin',
       'contact.heading': 'Yhteys',
-      'contact.intro': 'Laita viestiä!',
-      'contact.note': 'Lähetä viesti lomakkeella, vastaan sähköpostitse.',
-      'contact.instagram': 'Instagram @V.L.Nikolai',
+      'contact.intro': 'Lähetä minulle viesti!',
+      'contact.note': 'Lähetä viesti alla olevalla lomakkeella, niin vastaan sähköpostitse.',
+      'contact.instagram': 'Instagram',
       'contact.youtube': 'YouTube',
-      'contact.form.name': 'Nimi',
-      'contact.form.email': 'Sähköposti',
-      'contact.form.subject': 'Aihe (valinnainen)',
-      'contact.form.message': 'Viesti',
-      'contact.form.submit': 'Lähetä viesti',
-      'contact.form.sending': 'Lähetetään...',
-      'contact.form.success': 'Kiitos! Viesti lähetettiin.',
-      'contact.form.error': 'Viestin lähetys epäonnistui.',
-      'contact.form.required': 'Nimi, sähköposti ja viesti ovat pakollisia.',
     },
   };
-
-  const getLang = () => document.body?.dataset.lang || 'en';
-  const t = (key) => translations[getLang()]?.[key] || translations.en[key] || key;
 
   const applyLanguage = (lang) => {
     const targetLang = translations[lang] ? lang : 'en';
@@ -189,6 +241,29 @@
     } catch {
       // storage might be blocked; ignore
     }
+
+    document.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: targetLang } }));
+  };
+
+  const transitionLanguage = (lang) => {
+    if (prefersReducedMotion || !body) {
+      applyLanguage(lang);
+      return;
+    }
+
+    window.clearTimeout(languageTransitionTimer);
+    body.classList.remove('lang-switching-done');
+    body.classList.add('lang-switching');
+
+    languageTransitionTimer = window.setTimeout(() => {
+      applyLanguage(lang);
+      body.classList.add('lang-switching-done');
+      body.classList.remove('lang-switching');
+
+      languageTransitionTimer = window.setTimeout(() => {
+        body.classList.remove('lang-switching-done');
+      }, LANGUAGE_TRANSITION_MS);
+    }, LANGUAGE_TRANSITION_MS);
   };
 
   const savedLang = (() => {
@@ -205,66 +280,7 @@
     link.addEventListener('click', (event) => {
       event.preventDefault();
       const lang = link.dataset.lang;
-      applyLanguage(lang);
+      transitionLanguage(lang);
     });
   });
-
-  const contactForm = document.querySelector('#contact-form');
-  if (contactForm) {
-    const statusEl = document.querySelector('#contact-status');
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-
-    const setStatus = (message, tone = 'info') => {
-      if (!statusEl) return;
-      statusEl.textContent = message;
-      statusEl.style.color = tone === 'error' ? '#ff7b54' : '#aeb3c0';
-    };
-
-    contactForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const formData = new FormData(contactForm);
-      const payload = {
-        name: (formData.get('name') || '').toString(),
-        email: (formData.get('email') || '').toString(),
-        subject: (formData.get('subject') || '').toString(),
-        message: (formData.get('message') || '').toString(),
-        website: (formData.get('website') || '').toString(),
-      };
-
-      if (!payload.name.trim() || !payload.email.trim() || !payload.message.trim()) {
-        setStatus(t('contact.form.required'), 'error');
-        return;
-      }
-
-      const originalText = submitBtn?.textContent;
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = t('contact.form.sending');
-      }
-      setStatus(t('contact.form.sending'));
-
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-
-        const data = await res.json().catch(() => ({}));
-        if (res.ok) {
-          contactForm.reset();
-          setStatus(t('contact.form.success'));
-        } else {
-          setStatus(data.error || t('contact.form.error'), 'error');
-        }
-      } catch {
-        setStatus(t('contact.form.error'), 'error');
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText || t('contact.form.submit');
-        }
-      }
-    });
-  }
 })();

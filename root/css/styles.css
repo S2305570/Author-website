@@ -25,6 +25,61 @@ body {
     color: var(--text);
     line-height: 1.7;
     text-rendering: optimizeLegibility;
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+    filter: blur(6px);
+    transition: opacity 0.38s ease, transform 0.38s ease, filter 0.38s ease;
+}
+
+body.page-ready {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+}
+
+body.page-leaving {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+    filter: blur(8px);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.18;
+    background:
+        radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.38) 100%),
+        linear-gradient(180deg, rgba(6, 7, 9, 0.18), rgba(6, 7, 9, 0.34));
+    transition: opacity 0.38s ease;
+}
+
+body.page-ready::before {
+    opacity: 0;
+}
+
+body.page-leaving::before {
+    opacity: 0.3;
+}
+
+body.lang-switching {
+    filter: blur(7px);
+    transform: scale(0.996);
+}
+
+body.lang-switching::before {
+    opacity: 0.18;
+}
+
+body.lang-switching-done {
+    filter: blur(0);
+    transform: none;
+}
+
+body.lang-switching-done::before {
+    opacity: 0;
 }
 
 img {
@@ -447,6 +502,34 @@ section {
     color: var(--muted);
 }
 
+.book-description {
+    display: grid;
+    gap: 12px;
+}
+
+.book-description p {
+    line-height: 1.75;
+}
+
+.book-card.is-featured {
+    grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(18px, 3vw, 28px);
+}
+
+.book-card.is-featured .book-cover {
+    grid-row: 1 / span 4;
+}
+
+.book-card.is-featured h3 {
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+}
+
+.book-card.is-featured .book-description p:nth-last-child(-n+2) {
+    color: var(--text);
+    font-size: 1.05rem;
+}
+
 /* About */
 .split {
     display: grid;
@@ -577,6 +660,14 @@ textarea {
         grid-template-columns: 1fr;
     }
 
+    .book-card.is-featured {
+        grid-template-columns: 1fr;
+    }
+
+    .book-card.is-featured .book-cover {
+        grid-row: auto;
+    }
+
     .footer-meta {
         text-align: left;
     }
@@ -586,5 +677,25 @@ textarea {
     .section-heading {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    body.page-ready,
+    body.page-leaving {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    body::before,
+    body.page-ready::before,
+    body.page-leaving::before,
+    body.lang-switching::before,
+    body.lang-switching-done::before {
+        opacity: 0;
+        transition: none;
     }
 }
